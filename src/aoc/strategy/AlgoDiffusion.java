@@ -1,6 +1,8 @@
 package aoc.strategy;
 
+import aoc.observer.Capteur;
+
 public interface AlgoDiffusion {
-	public void configure();
-	public void execute();
+	public void configure(Capteur c);
+	public void execute(int cap);
 }
