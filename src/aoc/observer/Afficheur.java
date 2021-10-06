@@ -1,11 +1,14 @@
 package aoc.observer;
 
+import java.util.List;
+
 public class Afficheur implements ObserverDeCapteur{
 
+	private List<Integer> listInt;
+	
 	@Override
 	public void update(Capteur s) {
-		// TODO Auto-generated method stub
-		
+		listInt.add(s.getValue());
 	}
 	
 }
