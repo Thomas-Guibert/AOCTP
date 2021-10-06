@@ -1,4 +1,4 @@
-package aoc.activeobject;
+package aoc.observer;
 
 public interface Capteur {
 	public void attach(ObserverDeCapteur o);

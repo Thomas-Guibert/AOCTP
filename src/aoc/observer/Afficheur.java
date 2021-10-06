@@ -1,4 +1,4 @@
-package aoc.activeobject;
+package aoc.observer;
 
 public class Afficheur implements ObserverDeCapteur{
 
