@@ -22,7 +22,7 @@ public class DiffusionEpoque implements AlgoDiffusion{
 	public void execute(int cap) {
 		// TODO Auto-generated method stub
 		if(getRandom()) {
-			
+			//Update
 		}
 	}
 	

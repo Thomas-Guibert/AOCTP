@@ -9,6 +9,7 @@ public class Afficheur implements ObserverDeCapteur{
 	@Override
 	public void update(Capteur s) {
 		listInt.add(s.getValue());
+		//Unlock Capteur
 	}
 	
 }

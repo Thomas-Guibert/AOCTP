@@ -19,9 +19,8 @@ public class DiffusionSequentielle implements AlgoDiffusion{
 
 	@Override
 	public void execute(int cap) {
-		// TODO Auto-generated method stub
 		if(cap%2 == 1) {
-
+			//Update
 		}
 	}
 

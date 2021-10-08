@@ -1,5 +1,7 @@
 package aoc.activeobject.gv;
 
+import aoc.activeobject.midle.Future;
+
 public interface CapteurAsync {
-	public void getValue();
+	public Future getValue();
 }

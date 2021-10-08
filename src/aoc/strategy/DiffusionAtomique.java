@@ -18,8 +18,8 @@ public class DiffusionAtomique implements AlgoDiffusion {
 
 	@Override
 	public void execute(int cap) {
-		// TODO Auto-generated method stub
-		
+		int val = capt.getValue();
+		//Update
 	}
 
 }
