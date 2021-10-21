@@ -1,6 +1,7 @@
 package aoc.strategy;
 
 import aoc.observer.Capteur;
+import aoc.observer.CapteurImpl;
 
 public class DiffusionAtomique implements AlgoDiffusion {
 
@@ -9,16 +10,20 @@ public class DiffusionAtomique implements AlgoDiffusion {
 	 * [Toutes les valeur]
 	 */
 	
-	private Capteur capt;
+	private CapteurImpl capt;
+	
 	
 	@Override
-	public void configure(Capteur c) {
+	public void configure(CapteurImpl c) {
 		this.capt = c;
 	}
 
 	@Override
-	public void execute(int cap) {
+	public void execute() {
+		//if()
 		int val = capt.getValue();
+		
+		capt.getAff().get(0).update(capt);
 		//Update
 	}
 

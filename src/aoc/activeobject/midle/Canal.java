@@ -24,10 +24,10 @@ public class Canal implements ObserverDeCapteurAsync , CapteurAsync{
 	}
 	
 	@Override
-	public Future<Void> update(Capteur c) {
+	public Void update(Capteur c) {
 		execService.schedule(new Callable<Void> () {
 		//MethodInvocation fonction for Update
-		public Future<Void> call() throws InterruptedException, ExecutionException {
+		public Void call() throws InterruptedException, ExecutionException {
 			return afficheur.update(c);
 		}
 	}, 50, TimeUnit.MILLISECONDS);

@@ -3,6 +3,7 @@ package aoc.strategy;
 import java.util.Random;
 
 import aoc.observer.Capteur;
+import aoc.observer.CapteurImpl;
 
 public class DiffusionEpoque implements AlgoDiffusion{
 
@@ -11,24 +12,24 @@ public class DiffusionEpoque implements AlgoDiffusion{
 	 * [Random a deux valeur]
 	 */
 	
-	private Capteur capt;
+	private CapteurImpl capt;
 	
 	@Override
-	public void configure(Capteur c) {
+	public void configure(CapteurImpl c) {
 		this.capt=c;
 	}
 
 	@Override
-	public void execute(int cap) {
+	public void execute() {
 		// TODO Auto-generated method stub
 		if(getRandom()) {
-			//Update
+			capt.getAff().get(0).update(capt);
 		}
 	}
 	
 	public boolean getRandom() {
 		Random random = new Random();
-		int nb = 0+random.nextInt(1-0);
+		int nb = 0+random.nextInt(2-0);
 		if(nb%2==0)
 			return false;
 		else

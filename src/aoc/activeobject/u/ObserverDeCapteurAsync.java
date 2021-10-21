@@ -5,5 +5,5 @@ import java.util.concurrent.Future;
 import aoc.observer.Capteur;
 
 public interface ObserverDeCapteurAsync {
-	public Future<Void> update(Capteur c);
+	public Void update(Capteur c);
 }
