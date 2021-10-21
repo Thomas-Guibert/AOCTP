@@ -1,7 +1,9 @@
 package aoc.activeobject.gv;
 
-import aoc.activeobject.midle.Future;
+import java.util.concurrent.Future;
+
+import aoc.activeobject.u.ObserverDeCapteurAsync;
 
 public interface CapteurAsync {
-	public Future getValue();
+	public Future<Integer> getValue();
 }

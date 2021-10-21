@@ -1,8 +1,9 @@
 package aoc.activeobject.u;
 
-import aoc.activeobject.midle.Future;
+import java.util.concurrent.Future;
+
 import aoc.observer.Capteur;
 
 public interface ObserverDeCapteurAsync {
-	public Future update(Capteur c);
+	public Future<Void> update(Capteur c);
 }

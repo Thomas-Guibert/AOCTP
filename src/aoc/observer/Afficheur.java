@@ -1,15 +1,22 @@
 package aoc.observer;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
-public class Afficheur implements ObserverDeCapteur{
+import aoc.activeobject.midle.Canal;
+import aoc.activeobject.u.ObserverDeCapteurAsync;
 
-	private List<Integer> listInt;
+public class Afficheur implements ObserverDeCapteurAsync{
+
+	private Canal canal;
+	private ArrayList<Integer> listInt;
 	
 	@Override
-	public void update(Capteur s) {
+	public Future<Void> update(Capteur s) {
 		listInt.add(s.getValue());
 		//Unlock Capteur
+		return null;
 	}
 	
 }
