@@ -1,8 +1,7 @@
 package aoc.observer;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Future;
+import java.util.concurrent.ExecutionException;
 
 import aoc.activeobject.midle.Canal;
 import aoc.activeobject.u.ObserverDeCapteurAsync;
@@ -13,24 +12,27 @@ public class Afficheur implements ObserverDeCapteurAsync{
 	private Canal canal;
 	private ArrayList<Integer> listInt;
 	
-	public Afficheur(String name) {
+	public Afficheur(Canal canal, String name) {
 		listInt = new ArrayList<Integer>();
 		this.name=name;
+		this.canal = canal;
 	}
 	@Override
-	public Void update(Capteur s) {
-		listInt.add(s.getValue());
-		//Unlock Capteur
-		show();
+	public Void update(Capteur s) throws InterruptedException, ExecutionException {
+		listInt.add(this.canal.getValue(this).get());
+		//show();
 		return null;
 	}
 	
-	public void show() {
+	public String show() {
 		String res = name + " :";
-        for(int i=0;i<listInt.size();i++) {
-        	res += " " + listInt.get(i) + ",";
+		if(!listInt.isEmpty()) {
+			res += " " + listInt.get(0);
+        for(int i=1;i<listInt.size();i++) {
+        	res += ", " + listInt.get(i);
         }
-        System.out.println(res);
+		}
+        return res;
 	}
 	
 }

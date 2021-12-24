@@ -2,7 +2,10 @@ package aoc.observer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
+import aoc.activeobject.u.ObserverDeCapteurAsync;
 import aoc.strategy.AlgoDiffusion;
 import aoc.strategy.DiffusionAtomique;
 import aoc.strategy.DiffusionEpoque;
@@ -15,9 +18,10 @@ public class CapteurImpl implements Capteur{
 	private int value;
 
 	private boolean lock;
-	
+
 	private AlgoDiffusion strategy;
-	
+
+	private boolean algoBloque;
 
 
 	/**
@@ -25,80 +29,102 @@ public class CapteurImpl implements Capteur{
 	 */
 	private List<ObserverDeCapteur> listObserv;
 
+	private List<ObserverDeCapteurAsync> listObservAsync;
+
 	private ArrayList<Afficheur> listAff;
-	//public void attach(ObserverDeCapteur o) 
-	//listObserv.add(o);
-	//}
-	
-	public CapteurImpl () {
-		listAff = new ArrayList<Afficheur>();
-	}
-	
-	
-	@Override
-	public void attach(Afficheur o) {
-		listAff.add(o);
+
+
+	public CapteurImpl (String algo) {
+		value = 0;
+		algoBloque=false;
+		//listAff = new ArrayList<Afficheur>();
+		listObserv = new ArrayList<ObserverDeCapteur>();
+		listObservAsync = new ArrayList<ObserverDeCapteurAsync>();
+		setStrategy(sDiff(algo));
 	}
 
-	/**
-	 * Retourne la valeur du Capteur
-	 */
-	@Override
-	public int getValue() {
-		return value;
-		//return alg.execute(value);
-	}
 
-	/**
-	 * Fait passer la value du capteur a la valeur suivante
-	 */
-	//TODO : Appartir de la liste observer, verifier qu'il sont tous isDone avant de tick
 	@Override
-	public void tick() {
-		value++;
-		strategy.execute();
-		//if(!lock) {
-			
-			//lock =!lock;
-		//}
+	public void attach(ObserverDeCapteur o) {
+		listObserv.add(o);
 	}
 
 	@Override
 	public void detach(ObserverDeCapteur o) {
 		listObserv.remove(o);
 	}
-	
+
+	/**
+	 * Retourne la valeur du Capteur
+	 */
+	@Override
+	public int getValue(ObserverDeCapteurAsync obs) {
+		listObservAsync.remove(obs);
+		return value;
+		//return alg.execute(value);
+	}
+
+	public int verificationValue() {
+		return value;
+	}
+
+	/**
+	 * Fait passer la value du capteur a la valeur suivante
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
+	 */
+	//TODO : Appartir de la liste observer, verifier qu'il sont tous isDone avant de tick
+	@Override
+	public void tick() throws InterruptedException, ExecutionException {
+		value++;
+		for(int i = 0; i<listObserv.size();i++) {
+			strategy.execute();
+			if(!algoBloque) {
+				listObserv.get(i).update(this);
+			}
+			
+		}
+	}
+
+	public void setBlokageAlgo(boolean setBloquage) {
+		algoBloque=setBloquage;
+	}
+
 	public ArrayList<Afficheur> getAff(){
 		return listAff; 
 	}
-	
+
 	/////////////////////////////////////////////////////////////////
 	///////////////////////////  Lock //////////////////////////
 	/////////////////////////////////////////////////////////////////
-	
+
 	public boolean isLock() {
 		if(lock) return true; else return false;
 	}
-	
+
 	public void locked() { lock=true;}
-	
+
 	public void unlocked() { lock=false;}
-	
-	
+
+
 	/////////////////////////////////////////////////////////////////
 	///////////////////////////  Strategy  //////////////////////////
 	/////////////////////////////////////////////////////////////////
-	
+
 	public AlgoDiffusion getStrategy() {
 		return strategy;
 	}
-	
+
 	public void setStrategy(AlgoDiffusion stra) {
 		this.strategy = stra ;
-		this.strategy.configure(this);
+		this.strategy.configure(this, getObserver());
 	}
 
-	
+	public ArrayList<ObserverDeCapteurAsync> getObserver() {
+		return (ArrayList<ObserverDeCapteurAsync>) listObservAsync;
+	}
+
+
 	public AlgoDiffusion sDiff(String s) {
 		switch(s) {
 		case "A" :
