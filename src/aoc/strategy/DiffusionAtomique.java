@@ -13,7 +13,6 @@ public class DiffusionAtomique implements AlgoDiffusion {
 	 * Tout les valeur sont prise dans la diffusion Atomique
 	 * [Toutes les valeur]
 	 */
-
 	private CapteurImpl capt;
 
 	private ArrayList<ObserverDeCapteurAsync> obsAsync;

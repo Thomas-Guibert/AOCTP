@@ -17,6 +17,7 @@ public class Afficheur implements ObserverDeCapteurAsync{
 		this.name=name;
 		this.canal = canal;
 	}
+	
 	@Override
 	public Void update(Capteur s) throws InterruptedException, ExecutionException {
 		listInt.add(this.canal.getValue(this).get());

@@ -10,6 +10,5 @@ import aoc.observer.CapteurImpl;
 public interface AlgoDiffusion {
 	public void configure(CapteurImpl c, ArrayList<ObserverDeCapteurAsync> listObservAsync);
 	public void execute() throws InterruptedException, ExecutionException;
-	
 }
  

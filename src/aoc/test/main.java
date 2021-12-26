@@ -42,7 +42,7 @@ public class main {
 		listObsAsync.add(affiche3);
 		listObsAsync.add(affiche4);
 		
-		
+		//Attache les canaux au capteur
 		capteur.attach(canal1);
 		capteur.attach(canal2);
 		capteur.attach(canal3);
@@ -52,7 +52,7 @@ public class main {
 		canal3.setAfficheur(affiche3);
 		canal4.setAfficheur(affiche4);
 		
-		
+	
 		scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 			public void run() {
 				try {

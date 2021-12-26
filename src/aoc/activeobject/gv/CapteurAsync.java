@@ -7,3 +7,4 @@ import aoc.activeobject.u.ObserverDeCapteurAsync;
 public interface CapteurAsync {
 	public Future<Integer> getValue(ObserverDeCapteurAsync obs);
 }
+ 

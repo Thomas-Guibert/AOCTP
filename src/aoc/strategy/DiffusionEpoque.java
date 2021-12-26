@@ -14,7 +14,6 @@ public class DiffusionEpoque implements AlgoDiffusion{
 	 * Tout les Afficheur ne recoivent pas les meme valeur
 	 * [Random a deux valeur]
 	 */
-
 	private CapteurImpl capt;
 
 	private ArrayList<ObserverDeCapteurAsync> obsAsync;
