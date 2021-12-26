@@ -10,54 +10,79 @@ import aoc.activeobject.u.ObserverDeCapteurAsync;
 import aoc.observer.Afficheur;
 import aoc.observer.CapteurImpl;
 
+/**
+ * Class de test pour le TP d'AOC
+ * Dans ce test, 4 canaux sont utiliser pour montrer le bon fonctionnement des patterns
+ * @author thomas
+ *
+ */
 public class main {
 
 	public static void main(String[] args) {
 
-		//Capteur & Strategy
-		CapteurImpl capteur = new CapteurImpl("E");
-		
+		//##################################################################
+		//Choix du test a effectuer
+		//##################################################################
+		/**Le choix de la stategy ce fait ici :
+		- A : Diffusion Atomique
+		- S : Diffusion Sequentielle
+		- E : DIffusion par Epoque
+		 */
+		String diffusionChoisi = "A";
 
-		//ThreadService
+
+		//##################################################################
+		//Mise en place du test
+		//##################################################################
+		/**
+		 * Creation d'un Capteur avec la diffusion choisi
+		 */
+		CapteurImpl capteur = new CapteurImpl(diffusionChoisi);
+
+		/**
+		 * Initialisation d'un pool de thread, dans notre cas c'est un pool de 12 thread
+		 */
 		ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(12);
 
-		//Canal
+		/**
+		 * Creation des 4 cannaux 
+		 */
 		Canal canal1 = new Canal(capteur,scheduledExecutorService );
 		Canal canal2 = new Canal(capteur,scheduledExecutorService );
 		Canal canal3 = new Canal(capteur,scheduledExecutorService );
 		Canal canal4 = new Canal(capteur,scheduledExecutorService );
 
-
-		//Afficheurs
+		/**
+		 * Creation des 4 Afficheur
+		 */
 		Afficheur affiche1 = new Afficheur(canal1, "Afficheur 1");
 		Afficheur affiche2 = new Afficheur(canal2, "Afficheur 2");
 		Afficheur affiche3 = new Afficheur(canal3, "Afficheur 3");
 		Afficheur affiche4 = new Afficheur(canal4, "Afficheur 4");
 
-		
-		//Observer
-		ArrayList<ObserverDeCapteurAsync> listObsAsync = new ArrayList<ObserverDeCapteurAsync>();
-		listObsAsync.add(affiche1);
-		listObsAsync.add(affiche2);
-		listObsAsync.add(affiche3);
-		listObsAsync.add(affiche4);
-		
-		//Attache les canaux au capteur
+		/**
+		 * Attache les quatre cannaux au capteur
+		 */
 		capteur.attach(canal1);
 		capteur.attach(canal2);
 		capteur.attach(canal3);
 		capteur.attach(canal4);
+		
+		/**
+		 * Attache les 4 canaux a leurs afficheur
+		 */
 		canal1.setAfficheur(affiche1);
 		canal2.setAfficheur(affiche2);
 		canal3.setAfficheur(affiche3);
 		canal4.setAfficheur(affiche4);
-		
-	
+
+		/**
+		 * Execution du Scheduler
+		 */
 		scheduledExecutorService.scheduleAtFixedRate(new Runnable() {
 			public void run() {
 				try {
 					capteur.tick();
-					System.out.println(canal1.getAfficheur().equals(canal2.getAfficheur()));
 					canal1.showAfficheur();
 					canal2.showAfficheur();
 					canal3.showAfficheur();
