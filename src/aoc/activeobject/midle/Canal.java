@@ -51,6 +51,7 @@ public class Canal implements ObserverDeCapteur, CapteurAsync{
 	public void showAfficheur() {
 		System.out.println(afficheur.show());
 	}
+	
 	public String getAfficheur() {
 		return afficheur.show().substring(afficheur.show().indexOf(":")+1, afficheur.show().length());
 	}
