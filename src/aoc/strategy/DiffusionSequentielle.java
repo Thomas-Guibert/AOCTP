@@ -7,15 +7,13 @@ import aoc.activeobject.u.ObserverDeCapteurAsync;
 import aoc.observer.Capteur;
 import aoc.observer.CapteurImpl;
 
+/**
+ * Diffusion sementique : Seulement une partie des valeur sont prise dans la diffusion Sementique, dans notre cas ce sont les valeur impaires
+ * @author thomas
+ */
 public class DiffusionSequentielle implements AlgoDiffusion{
 
-
-	/*
-	 * Tout les valeur sont prise dans la diffusion Atomique
-	 * [Toutes les valeur]
-	 */
 	private CapteurImpl capt;
-
 	private ArrayList<ObserverDeCapteurAsync> obsAsync;
 
 
@@ -25,6 +23,9 @@ public class DiffusionSequentielle implements AlgoDiffusion{
 		this.obsAsync = obsAsync;
 	}
 
+	/**
+	 * Blockage de la valeur pour que seul les valeur impaire soit prise par l'afficheur
+	 */
 	@Override
 	public void execute() throws InterruptedException, ExecutionException {
 		if(capt.verificationValue()%2==0) {
