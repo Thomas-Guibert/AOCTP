@@ -13,7 +13,7 @@ import aoc.strategy.DiffusionSequentielle;
 
 public class CapteurImpl implements Capteur{
 	/**
-	 * Valeur du Capteur
+	 * parametre du Capteur
 	 */
 	private int value;
 
@@ -43,12 +43,17 @@ public class CapteurImpl implements Capteur{
 		setStrategy(sDiff(algo));
 	}
 
-
+	/**
+	 * attache un ObserverDeCapteur à ce capteur
+	 */
 	@Override
 	public void attach(ObserverDeCapteur o) {
 		listObserv.add(o);
 	}
 
+	/**
+	 * detach un ObserverDeCapteur à ce capteur
+	 */
 	@Override
 	public void detach(ObserverDeCapteur o) {
 		listObserv.remove(o);
@@ -61,9 +66,12 @@ public class CapteurImpl implements Capteur{
 	public int getValue(ObserverDeCapteurAsync obs) {
 		listObservAsync.remove(obs);
 		return value;
-		//return alg.execute(value);
 	}
 
+	/**
+	 * Fonction qui permet au pattern stategy de recupere la valeur et de faire un choix en fonction de celle-ci
+	 * @return Retourne la prochaine valeur que le capteur va transmettre
+	 */
 	public int verificationValue() {
 		return value;
 	}
@@ -73,7 +81,6 @@ public class CapteurImpl implements Capteur{
 	 * @throws ExecutionException 
 	 * @throws InterruptedException 
 	 */
-	//TODO : Appartir de la liste observer, verifier qu'il sont tous isDone avant de tick
 	@Override
 	public void tick() throws InterruptedException, ExecutionException {
 		value++;
@@ -82,48 +89,55 @@ public class CapteurImpl implements Capteur{
 			if(!algoBloque) {
 				listObserv.get(i).update(this);
 			}
-			
+
 		}
 	}
-
+	/**
+	 * Permet de bloquer l'ajoute de la valeur a l'afficheur
+	 * @param setBloquage boolean : true pour blockage activer et inversement false pour desactiver le blockage
+	 */
 	public void setBlokageAlgo(boolean setBloquage) {
 		algoBloque=setBloquage;
 	}
 
+	/**
+	 * retourne la liste des afficheur
+	 * @return liste des afficheurs
+	 */
 	public ArrayList<Afficheur> getAff(){
 		return listAff; 
 	}
 
-	/////////////////////////////////////////////////////////////////
-	///////////////////////////  Lock //////////////////////////
-	/////////////////////////////////////////////////////////////////
-	public boolean isLock() {
-		if(lock) return true; else return false;
-	}
-
-	public void locked() { lock=true;}
-
-	public void unlocked() { lock=false;}
-
-
-	/////////////////////////////////////////////////////////////////
-	///////////////////////////  Strategy  //////////////////////////
-	/////////////////////////////////////////////////////////////////
-
+	/**
+	 * @return la strategy selectionner
+	 */
 	public AlgoDiffusion getStrategy() {
 		return strategy;
 	}
 
+	/**
+	 * configure la strategy
+	 * @param stra la stategy choisi
+	 */
 	public void setStrategy(AlgoDiffusion stra) {
 		this.strategy = stra ;
 		this.strategy.configure(this, getObserver());
 	}
 
+	/**
+	 * @return la liste des ObserverAsync
+	 */
 	public ArrayList<ObserverDeCapteurAsync> getObserver() {
 		return (ArrayList<ObserverDeCapteurAsync>) listObservAsync;
 	}
 
-
+	/**
+	 * Permet de choisi la strategy grace a la premiere lettre de celui-ci 
+	 * -A pour atomique, S pour sequentielle et E pour epoque
+	 * L'algo par default est Atomique
+	 * @param s la lettre choisi par l'utilisateur
+	 * @return la stategy de diffusion assosier a la lettre
+	 */
 	public AlgoDiffusion sDiff(String s) {
 		switch(s) {
 		case "A" :
@@ -132,8 +146,9 @@ public class CapteurImpl implements Capteur{
 			return new DiffusionSequentielle();
 		case "E" :
 			return new DiffusionEpoque();
+		default :
+			return new DiffusionAtomique();
 		}
-		return null;
 	}
 
 }
